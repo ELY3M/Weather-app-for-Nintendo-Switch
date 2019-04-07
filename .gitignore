@@ -1,4 +1,4 @@
-*.txt
+git.txt
 /build
 *.elf
 *.nso
