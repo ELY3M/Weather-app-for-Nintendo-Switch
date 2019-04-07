@@ -34,6 +34,7 @@ SDL_Surface *	surface;
 
 TTF_Font* smfont;
 TTF_Font* font;
+TTF_Font* lgfont;
 	
 SDL_Surface* mouseImage;
 SDL_Texture* mouseTexture;
@@ -42,6 +43,7 @@ SDL_Surface* weatherImage;
 SDL_Texture* weatherTexture;
 
 
+char weathertemp[256] = "00°F";
 char weathericon[256] = "romfs:/gfx/unknown.png";
 char weathertext[256] = "unknown";
 char weatherlocation[256] = "unknown location";
@@ -328,6 +330,8 @@ void *getjson(char *JsonString) {
 		
 	}
 	
+	snprintf(weathertemp, 256, "%s°F", gettemp);
+	SDL_DrawTextf(renderer, lgfont, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 30, CYAN, weathertemp);
 	
 
 	snprintf(weathericon, 256, "romfs:/gfx/%s", getweatherimage);
@@ -336,11 +340,11 @@ void *getjson(char *JsonString) {
 	SDL_FreeSurface(weatherImage);
 	
 	snprintf(weathertext, 256, "%s", getweather);
-	SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, SCREEN_HEIGHT, CYAN, weathertext);
+	SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, SCREEN_HEIGHT + 73, CYAN, weathertext);
 	
 
 	snprintf(weatherlocation, 256, "%s", getlocation);
-	SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, SCREEN_HEIGHT + 63, CYAN, weatherlocation);
+	SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, SCREEN_HEIGHT + 136, CYAN, weatherlocation);
 
 		
 	
@@ -429,7 +433,7 @@ int main()
 	// Font loading
 	smfont = TTF_OpenFont("romfs:/fonts/FSEX300.ttf", 30);
 	font = TTF_OpenFont("romfs:/fonts/FSEX300.ttf", 43);
-
+    lgfont = TTF_OpenFont("romfs:/fonts/FSEX300.ttf", 103);
 
 	
 	weatherImage = IMG_Load(weathericon);
@@ -502,11 +506,11 @@ int main()
 		renderTexture(weatherTexture, renderer, 0, 0, SCREEN_WIDTH / 2, 200, 390, 300);
 		
 		
+		SDL_DrawTextf(renderer, lgfont, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 30, CYAN, weathertemp);
 		
-		SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, SCREEN_HEIGHT, CYAN, weathertext);
+		SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, SCREEN_HEIGHT + 73, CYAN, weathertext);
 	
-	
-		SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, SCREEN_HEIGHT + 63, CYAN, weatherlocation);
+		SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, SCREEN_HEIGHT + 136, CYAN, weatherlocation);
 		
 		
 		SDL_DrawTextf(renderer, smfont, 3, SCREEN_HEIGHT + 300, CYAN, "Press - for GPS Setting | Press A or X for Weather Info | Press + to exit");
