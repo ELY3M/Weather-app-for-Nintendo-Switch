@@ -3,7 +3,7 @@
 
 
 # BUG: The gps setting do not work right now.  Just have to set your GPS manually by make weather-gps.txt with your GPS like this 39.755,-93.103 in it.   
-
+# weather-gps.txt just go in /switch/ folder.   
 
 This weather homebrew app only get you weather info like Temp or Condition.  
 
