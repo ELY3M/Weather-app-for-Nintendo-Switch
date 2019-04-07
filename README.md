@@ -2,9 +2,10 @@
 
 
 
-# BUG: The gps setting do not work right now.  Just have to set your GPS manually by make weather-gps.txt with your GPS like this 39.755,-93.103 in it. The weather-gps.txt just go in /switch/ folder.   
+# This app work best if you launch hbmenu via title replacment / one of your games on your switch.   the GPS settings would not pop up keyboard if you launch it thru hbmenu via nro.  Watch my video if you are not sure about how to launch the app.   
 
 
+The video of the app in action on my switch:  https://youtu.be/pFggAxKcNsw
 
 
 This weather homebrew app only get you weather info like Temp or Condition.  

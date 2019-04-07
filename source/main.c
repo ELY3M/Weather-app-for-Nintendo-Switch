@@ -330,6 +330,11 @@ void *getjson(char *JsonString) {
 		
 	}
 	
+	
+	char* myclock = Clock();
+	SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, 3, CYAN, myclock);
+		
+	
 	snprintf(weathertemp, 256, "%s°F", gettemp);
 	SDL_DrawTextf(renderer, lgfont, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 30, CYAN, weathertemp);
 	
@@ -414,13 +419,13 @@ int main()
 	char *lon = NULL;
    	char *lat = NULL;
 	
-	// Initialize all
+	
 	SDL_Init(SDL_INIT_EVERYTHING);
 	IMG_Init(IMG_INIT_PNG);
 	TTF_Init();
 	romfsInit();
-	
 	curlInit();
+
 
 
 
@@ -564,7 +569,7 @@ int main()
 	IMG_Quit();
 	SDL_DestroyWindow(window);
 	SDL_Quit();
-	
+
 	
 	return EXIT_SUCCESS;
 }
