@@ -1,2 +1,7 @@
-build*
-Tiles_NX.*
+*.txt
+/build
+*.elf
+*.nso
+*.pfs0
+*.nacp
+*.nro
