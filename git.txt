@@ -1,0 +1,6 @@
+echo "# Weather-app-for-Nintendo-Switch" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:ELY3M/Weather-app-for-Nintendo-Switch.git
+git push -u origin master
