@@ -17,7 +17,7 @@ Press A or X to get weather info.
 Press + to exit to homebrew menu.   
 
 
-
+![Screenshot](screenshot.jpg)   
 
 
 Thanks/Credit to:  
