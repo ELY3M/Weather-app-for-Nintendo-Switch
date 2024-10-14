@@ -69,9 +69,9 @@ bool	downloadFile(const char *url, const char *filename)
 			
 			
 			
-			curl_slist_append(headers, "Accept: text/html");
-			curl_slist_append(headers, "Content-Type: text/html");
-			//curl_slist_append(headers, "charsets: utf-8");
+			curl_slist_append(headers, "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8");
+			curl_slist_append(headers, "Content-Type: application/json");
+			curl_slist_append(headers, "charsets: utf-8");
 			curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers); 
 			
 			curl_easy_setopt(curl, CURLOPT_USERAGENT, "Weather Text for Nintendo Switch by ELY M. contact money@mboca.com");
@@ -148,7 +148,7 @@ int xferinfo(curl_off_t dltotal, curl_off_t dlnow) {
 	}
 	
 	if (dlnow == dltotal && dltotal > 0 && once == false) {
-		printf("\n                                                                                "); // lol, is required
+		printf("\n"); // lol, is required
 		once = true;
 	}
 	
