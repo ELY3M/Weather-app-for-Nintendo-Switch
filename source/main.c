@@ -427,7 +427,9 @@ int main()
 	romfsInit();
 	curlInit();
 
-
+	padConfigureInput(1, HidNpadStyleSet_NpadStandard);
+	PadState pad;
+	padInitializeDefault(&pad);
 
 	// Create an SDL window & renderer
 	window = SDL_CreateWindow("Main-Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
@@ -449,11 +451,8 @@ int main()
 	while (appletMainLoop())
 	{
 	
-	
-		padConfigureInput(1, HidNpadStyleSet_NpadStandard);
-		PadState pad;
-		padInitializeDefault(&pad);
-
+        padUpdate(&pad);
+        u64 kDown = padGetButtonsDown(&pad);
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		//Clear
