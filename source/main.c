@@ -10,12 +10,13 @@
 #include <time.h>
 
 #include <switch.h>
-
+#include <curl/curl.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "download.h"
 #include "jsmn.h"
 
 
@@ -43,10 +44,10 @@ SDL_Surface* weatherImage;
 SDL_Texture* weatherTexture;
 
 
-char weathertemp[256] = "00°F";
-char weathericon[256] = "romfs:/gfx/unknown.png";
-char weathertext[256] = "unknown";
-char weatherlocation[256] = "unknown location";
+char weathertemp[512] = "00°F";
+char weathericon[512] = "romfs:/gfx/unknown.png";
+char weathertext[512] = "unknown";
+char weatherlocation[512] = "unknown location";
 
 static inline SDL_Color SDL_MakeColour(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
@@ -286,14 +287,14 @@ void *getjson(char *JsonString) {
 	jsmn_init(&p);
 	r = jsmn_parse(&p, JsonString, strlen(JsonString), t, sizeof(t)/sizeof(t[0]));
 	if (r < 0) {
-		//printf("Failed to parse JSON: %d\n", r);
-		return;
+		printf("Failed to parse JSON: %d\n", r);
+		return 0;
 	}
 
 	/* Assume the top-level element is an object */
 	if (r < 1 || t[0].type != JSMN_OBJECT) {
-		//printf("Object expected\n");
-		return;
+		printf("Object expected\n");
+		return 0;
 	}
 
 
@@ -354,7 +355,7 @@ void *getjson(char *JsonString) {
 		
 	
 	//SDL_RenderPresent(renderer);
-	return;
+	return JsonString;
 }
 
 
@@ -428,8 +429,6 @@ int main()
 
 
 
-
-
 	// Create an SDL window & renderer
 	window = SDL_CreateWindow("Main-Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -451,8 +450,9 @@ int main()
 	{
 	
 	
-		hidScanInput();
-		kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+		padConfigureInput(1, HidNpadStyleSet_NpadStandard);
+		PadState pad;
+		padInitializeDefault(&pad);
 
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -522,12 +522,12 @@ int main()
 		
 	
 
-		if (kDown & KEY_MINUS)  { 
+		if (kDown & HidNpadButton_Minus)  { 
 		setMyGPS();	
 		}
 
 
-		if (kDown & KEY_A)  { 
+		if (kDown & HidNpadButton_A)  { 
 		FILE_TRANSFER_HTTP(lat, lon); 
 		sleep(1); 
 		readWeather(); 
@@ -535,7 +535,7 @@ int main()
 		}
 	
 		
-		if (kDown & KEY_X)  { 
+		if (kDown & HidNpadButton_X)  { 
 		FILE_TRANSFER_HTTP(lat, lon); 
 		sleep(1);
 		readWeather(); 
@@ -543,7 +543,7 @@ int main()
 
 		}	
 		
-		if (kDown & KEY_PLUS) { break; } 
+		if (kDown & HidNpadButton_Plus) { break; } 
 		
 		
 		
@@ -560,8 +560,6 @@ int main()
 
 
 	SDL_DestroyTexture(mouseTexture);
-	
-	
 	
 	curlExit();
 	romfsExit();

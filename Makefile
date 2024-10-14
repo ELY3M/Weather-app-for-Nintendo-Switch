@@ -38,7 +38,7 @@ EXEFS_SRC	  := exefs_src
 ROMFS         := romfs
 APP_TITLE     := Weather
 APP_AUTHOR    := ELY M.
-APP_VERSION   := 1.0
+APP_VERSION   := 1.1
 ICON 		  := icon.jpg
 
 #---------------------------------------------------------------------------------
@@ -49,19 +49,20 @@ ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE -ftls-model=local-exec
 CFLAGS	:=	-g -Wall -O3 -ffunction-sections \
 			$(ARCH) $(DEFINES)
 
-CFLAGS	+=	$(INCLUDE) -D__SWITCH__
+CFLAGS	+=	$(INCLUDE) -D__SWITCH__ `sdl2-config --cflags` `freetype-config --cflags`
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:=  -lcurl -lmbedtls -lmbedx509 -lmbedcrypto \
-			-lSDL2_ttf -lSDL2_image -lSDL2_mixer -lSDL2 \
-			-lpng -lz -ljpeg \
-			-lglad -lEGL -lglapi -ldrm_nouveau -lstdc++ \
-			-lvorbisidec -logg -lmpg123 -lmodplug \
-			-lnx -lm -lwebp -lfreetype -lbz2
+
+LIBS	:=  `aarch64-none-elf-pkg-config SDL2_ttf vorbisidec ogg SDL2_image --libs` -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lmodplug -lmpg123 -lpng  -lz -ljpeg -lglad -lEGL -lglapi -ldrm_nouveau -lstdc++ -lturbojpeg -lSDL2 -lnx -lm -lwebp -lfreetype -lbz2 `sdl2-config --libs` `freetype-config --libs`
+
+###old
+#LIBS	:=	-lsdl2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf -lcurl -lmbedtls -lmbedx509 -lmbedcrypto \
+#			-lpng -lz -ljpeg -lglad -lEGL -lglapi -ldrm_nouveau -lstdc++ \
+#			-lvorbisidec -logg -lmpg123 -lmodplug -lnx -lm -lwebp -lfreetype -lbz2
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing

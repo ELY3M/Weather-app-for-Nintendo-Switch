@@ -19,6 +19,7 @@ struct myprogress {
   CURL *curl;
 };
 
+/*
 struct a {
     char        dnld_remote_fname[512];
     char        dnld_url[512];
@@ -26,7 +27,7 @@ struct a {
     FILE        *dbg_stream;
     uint64_t    dnld_file_sz;
 } dnld_params;
-
+*/
 
 /* Prototypes */
 
