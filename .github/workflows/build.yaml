@@ -31,5 +31,5 @@ jobs:
           prerelease: false
           draft: false
           body: ${{ github.event.head_commit.message }}
-          files: Weather-app-for-Nintendo-Switch.nro
+          files: Weather-app-for-Nintendo-Switch.nro weather-gps.txt
           name: "Switch Release #${{ github.run_number }}"
