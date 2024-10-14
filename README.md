@@ -10,6 +10,8 @@ The video of the app in action on my switch:  https://youtu.be/pFggAxKcNsw
 This weather homebrew app only get you weather info like Temp or Condition.  
 
 you need to set your GPS in the setting by press - button.
+It is important to not leave any spaces.  It must be like this 
+40.1231,-90.3001
 
 Press A or X to get weather info.  
 

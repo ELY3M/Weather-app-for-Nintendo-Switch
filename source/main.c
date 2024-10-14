@@ -10,7 +10,6 @@
 #include <time.h>
 
 #include <switch.h>
-#include <curl/curl.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_image.h>
@@ -192,7 +191,7 @@ static bool	setMyGPS(void)
 	char		*tmpout = NULL;
 	bool		err = false;
 
-	tmpout = popKeyboard("set your GPS like this 39.232,-93.75", 256);
+	tmpout = popKeyboard("set your GPS like this 39.232,-93.75 - Make sure you do not leave any spaces", 256);
 
 	if (tmpout != NULL) {
 		if (*tmpout == 0) {
@@ -501,8 +500,8 @@ int main()
 		mygps = readMyGPS();
 	    lat = strtok(mygps, ",");
    	    lon = strtok(NULL, ",");	
-		char gpsstring[100]; 
-		snprintf(gpsstring, 100, "My GPS: %s,%s", lat,lon);
+		char gpsstring[256]; 
+		snprintf(gpsstring, 256, "My GPS: %s,%s", lat,lon);
 		SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, 43, CYAN, gpsstring);
 		
 
@@ -543,12 +542,7 @@ int main()
 		}	
 		
 		if (kDown & HidNpadButton_Plus) { break; } 
-		
-		
-		
-		
-		
-		
+				
 		
 		SDL_RenderPresent(renderer);
 		
