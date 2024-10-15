@@ -185,13 +185,34 @@ char *Clock(void) {
 	
 }
 
+char * removeSpaces(char *string)
+{
+    // non_space_count to keep the frequency of non space characters
+    int non_space_count = 0;
+ 
+    //Traverse a string and if it is non space character then, place it at index non_space_count
+    for (int i = 0; string[i] != '\0'; i++)
+    {
+        if (string[i] != ' ')
+        {
+            string[non_space_count] = string[i];
+            non_space_count++;//non_space_count incremented
+        }   
+		
+    }
+    
+    //Finally placing final character at the string end
+    string[non_space_count] = '\0';
+    return string;
+}
+
 static bool	setMyGPS(void)
 {
 	FILE		*fp = NULL;
 	char		*tmpout = NULL;
 	bool		err = false;
 
-	tmpout = popKeyboard("set your GPS like this 39.232,-93.75 - Make sure you do not leave any spaces", 256);
+	tmpout = popKeyboard("set your GPS like this 39.232,-93.75", 256);
 
 	if (tmpout != NULL) {
 		if (*tmpout == 0) {
@@ -245,6 +266,10 @@ char *readMyGPS(void)
 		nbytes = fread(buffer, sizeof(char), st.st_size, fp);
 		if (nbytes > 0) {
 			//mygps = buffer;
+			//remove spaces
+			//printf("readMyGPS(): trying to remove spaces\n");
+			buffer = removeSpaces(buffer);
+			strtok(buffer, "\n");
 		}
 		fclose(fp);
 	}
