@@ -1,3 +1,16 @@
+/*
+
+
+Weather app for Nintendo Switch 
+
+
+ELY M. 
+
+
+
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -113,7 +126,7 @@ void SDL_DrawRect(SDL_Renderer *renderer, int x, int y, int w, int h, SDL_Color 
 }
 
 
-/*
+/* this crashes
 void userAppInit(void)
 {
 	void *addr = NULL;
@@ -311,13 +324,13 @@ void *getjson(char *JsonString) {
 	jsmn_init(&p);
 	r = jsmn_parse(&p, JsonString, strlen(JsonString), t, sizeof(t)/sizeof(t[0]));
 	if (r < 0) {
-		printf("Failed to parse JSON: %d\n", r);
+		//printf("Failed to parse JSON: %d\n", r);
 		return 0;
 	}
 
 	/* Assume the top-level element is an object */
 	if (r < 1 || t[0].type != JSMN_OBJECT) {
-		printf("Object expected\n");
+		//printf("Object expected\n");
 		return 0;
 	}
 
@@ -430,11 +443,6 @@ char *readWeather(void)
 }
 
 
-
-
-
-
-
 int main()
 {
 
@@ -469,8 +477,6 @@ int main()
 	weatherImage = IMG_Load(weathericon);
 	weatherTexture = SDL_CreateTextureFromSurface(renderer, weatherImage);
 	SDL_FreeSurface(weatherImage);
-	
-
 
 	while (appletMainLoop())
 	{

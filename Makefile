@@ -59,10 +59,6 @@ LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*
 
 LIBS	:=  `aarch64-none-elf-pkg-config SDL2_ttf vorbisidec ogg SDL2_image --libs` -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lmodplug -lmpg123 -lpng  -lz -ljpeg -lglad -lEGL -lglapi -ldrm_nouveau -lstdc++ -lturbojpeg -lSDL2 -lnx -lm -lwebp -lfreetype -lbz2 `sdl2-config --libs` `freetype-config --libs`
 
-###old
-#LIBS	:=	-lsdl2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf -lcurl -lmbedtls -lmbedx509 -lmbedcrypto \
-#			-lpng -lz -ljpeg -lglad -lEGL -lglapi -ldrm_nouveau -lstdc++ \
-#			-lvorbisidec -logg -lmpg123 -lmodplug -lnx -lm -lwebp -lfreetype -lbz2
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
