@@ -49,7 +49,8 @@ ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE -ftls-model=local-exec
 CFLAGS	:=	-g -Wall -O3 -ffunction-sections \
 			$(ARCH) $(DEFINES)
 
-CFLAGS	+=	$(INCLUDE) -D__SWITCH__ `sdl2-config --cflags` `freetype-config --cflags`
+CFLAGS	+=	$(INCLUDE) -D__SWITCH__ `sdl2-config --cflags`
+##`freetype-config --cflags` needed????
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 
@@ -57,7 +58,8 @@ ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
 
-LIBS	:=  `aarch64-none-elf-pkg-config SDL2_ttf vorbisidec ogg SDL2_image --libs` -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lmodplug -lmpg123 -lpng  -lz -ljpeg -lglad -lEGL -lglapi -ldrm_nouveau -lstdc++ -lturbojpeg -lSDL2 -lnx -lm -lwebp -lfreetype -lbz2 `sdl2-config --libs` `freetype-config --libs`
+LIBS	:=  `aarch64-none-elf-pkg-config SDL2_ttf vorbisidec ogg SDL2_image --libs` -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lmodplug -lmpg123 -lpng  -lz -ljpeg -lglad -lEGL -lglapi -ldrm_nouveau -lstdc++ -lturbojpeg -lSDL2 -lnx -lm -lwebp -lfreetype -lbz2 `sdl2-config --libs` 
+###`freetype-config --libs`
 
 
 #---------------------------------------------------------------------------------

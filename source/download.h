@@ -36,7 +36,7 @@ void curlInit(void);
 void curlExit(void);
 
 void FILE_TRANSFER_FTP(char *url, char path[]);
-bool FILE_TRANSFER_HTTP();
+bool FILE_TRANSFER_HTTP(char *lat, char *lon);
 int xferinfo(curl_off_t dltotal, curl_off_t dlnow);
 int older_progress(void *p, double dltotal, double dlnow, double ultotal, double ulnow);
 size_t dnld_header_parse(void *hdr, size_t size, size_t nmemb);

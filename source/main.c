@@ -56,10 +56,10 @@ SDL_Surface* weatherImage;
 SDL_Texture* weatherTexture;
 
 
-char weathertemp[512] = "00°F";
-char weathericon[512] = "romfs:/gfx/unknown.png";
-char weathertext[512] = "unknown";
-char weatherlocation[512] = "unknown location";
+char *weathertemp = "00°F";
+char *weathericon = "romfs:/gfx/unknown.png";
+char *weathertext = "unknown";
+char *weatherlocation = "unknown location";
 
 static inline SDL_Color SDL_MakeColour(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
@@ -126,14 +126,6 @@ void SDL_DrawRect(SDL_Renderer *renderer, int x, int y, int w, int h, SDL_Color 
 }
 
 
-/* this crashes
-void userAppInit(void)
-{
-	void *addr = NULL;
-	if (svcSetHeapSize(&addr, 0x4000000) == (Result)-1)
-		fatalSimple(0);
-}
-*/
 
 char	*popKeyboard(char *message, size_t size)
 {
@@ -165,10 +157,9 @@ char *Clock(void) {
 	
 	
 		//Clock
-		char clock[256] = "time";
+		char *clock = "time";
 		const char* ampm = "AM";
 		time_t unixTime = time(NULL);
-		//struct tm* timeStruct = gmtime((const time_t *)&unixTime);
 		struct tm* timeStruct = localtime((const time_t *)&unixTime);
 		int hours = timeStruct->tm_hour;
 		int minutes = timeStruct->tm_min;
@@ -315,10 +306,10 @@ void *getjson(char *JsonString) {
 	jsmn_parser p;
 	jsmntok_t t[256]; /* We expect no more than 128 tokens */
 	
-	char gettemp[256];
-	char getweather[256]; 
-	char getweatherimage[256];  
-	char getlocation[256]; 
+	char *gettemp = "";
+	char *getweather = ""; 
+	char *getweatherimage = "";  
+	char *getlocation = ""; 
 	
 
 	jsmn_init(&p);
@@ -447,7 +438,7 @@ int main()
 {
 
 
-	char *myclock = NULL;
+	//char *myclock = NULL;
 	char *mygps = NULL;
 	char *lon = NULL;
    	char *lat = NULL;

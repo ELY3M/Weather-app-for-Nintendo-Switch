@@ -175,7 +175,7 @@ bool FILE_TRANSFER_HTTP(char *lat, char *lon) {
 	
 	//https://forecast.weather.gov/MapClick.php?lat=40.6&lon=-111.64&FcstType=json
 	char	*url = "https://forecast.weather.gov/MapClick.php?";
-	char finalurl[256];  
+	char *finalurl = "";  
 	
 	snprintf(finalurl, 256, "%slat=%s&lon=%s&FcstType=json", url, lat, lon);
 	
