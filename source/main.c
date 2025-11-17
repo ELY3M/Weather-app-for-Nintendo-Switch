@@ -56,10 +56,10 @@ SDL_Surface* weatherImage;
 SDL_Texture* weatherTexture;
 
 
-char *weathertemp = "00°F";
-char *weathericon = "romfs:/gfx/unknown.png";
-char *weathertext = "unknown";
-char *weatherlocation = "unknown location";
+char weathertemp[256];
+char weathericon[256];
+char weathertext[256];
+char weatherlocation[256];
 
 static inline SDL_Color SDL_MakeColour(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
@@ -112,7 +112,7 @@ void SDL_DrawTextf(SDL_Renderer *renderer, TTF_Font *font, int x, int y, SDL_Col
 	char buffer[256];
 	va_list args;
 	va_start(args, text);
-	vsnprintf(buffer, 256, text, args);
+	vsnprintf(buffer, sizeof(buffer), text, args);
 	SDL_DrawText(renderer, font, x, y, colour, buffer);
 	va_end(args);
 }
@@ -157,7 +157,7 @@ char *Clock(void) {
 	
 	
 		//Clock
-		char *clock = "time";
+		char clock[256];
 		const char* ampm = "AM";
 		time_t unixTime = time(NULL);
 		struct tm* timeStruct = localtime((const time_t *)&unixTime);
@@ -181,7 +181,7 @@ char *Clock(void) {
 		ampm = "PM";
         }
 
-		snprintf(clock, 256, "%s %s %i %i %02i:%02i:%02i %s", weekDays[wday], months[month], day, year, hours, minutes, seconds, ampm);			
+		snprintf(clock, sizeof(clock)+1, "%s %s %i %i %02i:%02i:%02i %s", weekDays[wday], months[month], day, year, hours, minutes, seconds, ampm);			
 		SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, 3, CYAN, clock);
 		
 		return (clock);
@@ -306,10 +306,10 @@ void *getjson(char *JsonString) {
 	jsmn_parser p;
 	jsmntok_t t[256]; /* We expect no more than 128 tokens */
 	
-	char *gettemp = "";
-	char *getweather = ""; 
-	char *getweatherimage = "";  
-	char *getlocation = ""; 
+	char gettemp[256];
+	char getweather[256]; 
+	char getweatherimage[256];  
+	char getlocation[256]; 
 	
 
 	jsmn_init(&p);
@@ -330,24 +330,24 @@ void *getjson(char *JsonString) {
 	for (i = 1; i < r; i++) {
 		if (jsoneq(JsonString, &t[i], "Temp") == 0) {
 			//printf("Temp: %.*s\n", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
-			snprintf(gettemp, 256, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start); 
+			snprintf(gettemp, sizeof(gettemp)+1, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start); 
 			i++;
 		} 
 				
 		else if (jsoneq(JsonString, &t[i], "Weather") == 0) {
 			//printf("Weather: %.*s\n", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
-			snprintf(getweather, 256, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
+			snprintf(getweather, sizeof(getweather)+1, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
 			i++;
 		} else if (jsoneq(JsonString, &t[i], "Weatherimage") == 0) {
 			//printf("Weatherimage: %.*s\n", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
-			snprintf(getweatherimage, 256, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
+			snprintf(getweatherimage, sizeof(getweatherimage)+1, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
 			i++;
 		} 
 		
 		
    		else if (jsoneq(JsonString, &t[i], "name") == 0) {
 			//printf("Location: %.*s\n", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
-			snprintf(getlocation, 256, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);  
+			snprintf(getlocation, sizeof(getlocation)+1, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);  
 			i++;
 		} 
 		
@@ -364,20 +364,20 @@ void *getjson(char *JsonString) {
 	SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, 3, CYAN, myclock);
 		
 	
-	snprintf(weathertemp, 256, "%s°F", gettemp);
+	snprintf(weathertemp, sizeof(weathertemp)+1, "%s°F", gettemp);
 	SDL_DrawTextf(renderer, lgfont, SCREEN_WIDTH / 2, SCREEN_HEIGHT - 30, CYAN, weathertemp);
 	
 
-	snprintf(weathericon, 256, "romfs:/gfx/%s", getweatherimage);
+	snprintf(weathericon, sizeof(weathericon)+1, "romfs:/gfx/%s", getweatherimage);
 	weatherImage = IMG_Load(weathericon);
 	weatherTexture = SDL_CreateTextureFromSurface(renderer, weatherImage);
 	SDL_FreeSurface(weatherImage);
 	
-	snprintf(weathertext, 256, "%s", getweather);
+	snprintf(weathertext, sizeof(weathertext)+1, "%s", getweather);
 	SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, SCREEN_HEIGHT + 73, CYAN, weathertext);
 	
 
-	snprintf(weatherlocation, 256, "%s", getlocation);
+	snprintf(weatherlocation, sizeof(weatherlocation)+1, "%s", getlocation);
 	SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, SCREEN_HEIGHT + 136, CYAN, weatherlocation);
 
 		
@@ -523,7 +523,7 @@ int main()
 	    lat = strtok(mygps, ",");
    	    lon = strtok(NULL, ",");	
 		char gpsstring[256]; 
-		snprintf(gpsstring, 256, "My GPS: %s,%s", lat,lon);
+		snprintf(gpsstring, sizeof(gpsstring)+1, "My GPS: %s,%s", lat,lon);
 		SDL_DrawTextf(renderer, font, SCREEN_WIDTH / 2, 43, CYAN, gpsstring);
 		
 

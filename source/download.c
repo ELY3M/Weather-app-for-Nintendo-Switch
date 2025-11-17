@@ -174,22 +174,19 @@ bool FILE_TRANSFER_HTTP(char *lat, char *lon) {
 	
 	
 	//https://forecast.weather.gov/MapClick.php?lat=40.6&lon=-111.64&FcstType=json
-	char	*url = "https://forecast.weather.gov/MapClick.php?";
-	char *finalurl = "";  
-	
-	snprintf(finalurl, 256, "%slat=%s&lon=%s&FcstType=json", url, lat, lon);
-	
+	char url[256];  	
+	snprintf(url, sizeof(url)+1, "https://forecast.weather.gov/MapClick.php?lat=%s&lon=%s&FcstType=json", lat, lon);
 	
 	
 	//char	*filename = NULL;
 
 	
-	if (finalurl == (void *) -1) {
+	if (url == (void *) -1) {
 		return (false);
-	} else if (finalurl != NULL) {
+	} else if (url != NULL) {
 
 
-		downloadFile(finalurl, "weather.txt");
+		downloadFile(url, "weather.txt");
 		
 		
 
