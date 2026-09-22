@@ -39,7 +39,7 @@ ROMFS         := romfs
 APP_TITLE     := Weather
 APP_AUTHOR    := ELY M.
 APP_VERSION   := 1.1
-ICON 		  := icon.jpg
+ICON 		  := icon.png
 
 #---------------------------------------------------------------------------------
 # options for code generation
